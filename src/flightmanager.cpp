@@ -6,6 +6,7 @@
 #include "ui.h"
 #include "mavlink.h"
 #include "sologimbal.h"
+#include "buzzer.h"
 
 const FlightManager::BatteryState FlightManager::batteryStates[] = {
     { BatteryNormal, Event::None, BatteryLevelLow, BatteryLevelMax},
@@ -292,10 +293,9 @@ void FlightManager::onAButtonEvt(Button *b, Button::Event e)
 
 void FlightManager::onBButtonEvt(Button *b, Button::Event e)
 {
-    if (btnEventShouldForceDisarm(b, e)) {
-        forceDisarm();
-        return;
-    }
+   Buzzer::init(200);
+   Buzzer::setFrequency(200);
+   Buzzer::play();
 }
 
 void FlightManager::onPowerButtonEvt(Button *b, Button::Event e)
