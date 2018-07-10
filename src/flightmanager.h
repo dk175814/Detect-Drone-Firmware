@@ -11,6 +11,7 @@
 
 #include "mavlink/c_library/common/mavlink.h"
 #include "mavlink/c_library/ardupilotmega/mavlink.h"
+#include "buzzer.h"
 
 class FlightManager
 {
