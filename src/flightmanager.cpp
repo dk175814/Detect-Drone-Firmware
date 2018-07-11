@@ -293,8 +293,8 @@ void FlightManager::onAButtonEvt(Button *b, Button::Event e)
 
 void FlightManager::onBButtonEvt(Button *b, Button::Event e)
 {
-   Buzzer::init(200);
-   Buzzer::setFrequency(200);
+   Buzzer::init(440);
+   Buzzer::setFrequency(440);
    Buzzer::play();
 }
 
