@@ -8,6 +8,8 @@
 #include "sologimbal.h"
 #include "buzzer.h"
 
+Buzzer buz;
+
 const FlightManager::BatteryState FlightManager::batteryStates[] = {
     { BatteryNormal, Event::None, BatteryLevelLow, BatteryLevelMax},
     { BatteryLow, Event::FlightBatteryLow, BatteryLevelCritical, BatteryLevelLowDismiss},
@@ -293,13 +295,20 @@ void FlightManager::onAButtonEvt(Button *b, Button::Event e)
 
 void FlightManager::onBButtonEvt(Button *b, Button::Event e)
 {
-	if (e == Button::ClickRelease)
-	{
-		Buzzer::init(200);
-   		Buzzer::setFrequency(200);
-  	 	Buzzer::play;	
+	
+	if (btnEventShouldForceDisarm(b, e)) {
+		forceDisarm();
+		return;
 	}
-   
+	else
+	{
+		if (e == Button::ClickRelease)
+		{
+			buz.init(440);
+			buz.setFrequency(440);
+			buz.play();
+		}
+	}
 }
 
 void FlightManager::onPowerButtonEvt(Button *b, Button::Event e)
