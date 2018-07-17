@@ -332,6 +332,31 @@ void FlightManager::onPauseButtonEvt(Button *b, Button::Event e)
         }
     }
 }
+bool FlightManager::Parachute(Button *b, Button::Event e) const
+{
+    /*
+     * Force disarm will kill the motors and disarm the vehicle,
+     * even when armed and/or in the air,Parachute gets deployed.
+     */
+
+    UNUSED(b);
+
+    if (!armed()) {
+        return false;
+    }
+
+    if (e == Button::Hold) {
+        if (ButtonManager::button(Io::ButtonA).isHeld() &&
+            ButtonManager::button(Io::ButtonB).isHeld() &&
+            ButtonManager::button(Io::ButtonLoiter).isHeld()&&
+            ButtonManager::button(Io::ButtonRTL).isHeld())
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 bool FlightManager::btnEventShouldForceDisarm(Button *b, Button::Event e) const
 {
@@ -346,10 +371,10 @@ bool FlightManager::btnEventShouldForceDisarm(Button *b, Button::Event e) const
         return false;
     }
 
-    if (e == Button::Hold) {
-        if (ButtonManager::button(Io::ButtonA).isHeld() &&
-            ButtonManager::button(Io::ButtonB).isHeld() &&
-            ButtonManager::button(Io::ButtonLoiter).isHeld())
+    if (e == Button::ShortHold) {
+        if (ButtonManager::button(Io::ButtonA).isHeldShort() &&
+            ButtonManager::button(Io::ButtonB).isHeldShort() &&
+            ButtonManager::button(Io::ButtonLoiter).isHeldShort())
         {
             return true;
         }
