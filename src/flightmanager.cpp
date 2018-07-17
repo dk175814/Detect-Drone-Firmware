@@ -307,6 +307,7 @@ void FlightManager::onBButtonEvt(Button *b, Button::Event e)
 			buz.init(440);
 			buz.setFrequency(440);
 			buz.play();
+			buz.stop();
 		}
 	}
 }
