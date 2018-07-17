@@ -7,6 +7,7 @@
 #include "mavlink.h"
 #include "sologimbal.h"
 #include "buzzer.h"
+#include "dsm.h"
 
 Buzzer buz;
 
