@@ -22,7 +22,7 @@ void Dsm::onLoiterButtonEvt(Button *b, Button::Event evt)
 
     // OPEN SOLO MOD: Toggle RC CH7 high and low with the pause button
     // HoldRelease (2 sec) sets CH7 low. LongHold (3 sec) sets CH7 high.
-    if ( evt == Button::Hold ) {
+    if ( evt == Button::LongHold ) {
         channels[DsmCh7] = DsmHighVal;
         Ui::instance.pendEvent(Event::CH7high);    
     } else if ( evt == Button::HoldRelease ) {
