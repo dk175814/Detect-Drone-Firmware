@@ -26,6 +26,7 @@ public:
     void onLoiterButtonEvt(Button *b, Button::Event evt);
 
     void producePacket(HostProtocol::Packet &pkt);
+    void Active();
 
 private:
 
