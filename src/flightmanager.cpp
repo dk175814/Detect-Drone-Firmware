@@ -252,6 +252,11 @@ void FlightManager::onRtlButtonEvt(Button *b, Button::Event evt)
     if (!linkIsConnected()) {
         return;
     }
+	if (parachute(b, e)) {
+        forceDisarm();
+	d.Active();
+        return;
+    }
 
     if (evt == Button::ClickRelease) {
         if (inFlight()) {
@@ -285,6 +290,11 @@ void FlightManager::onAButtonEvt(Button *b, Button::Event e)
         forceDisarm();
         return;
     }
+	if (parachute(b, e)) {
+        forceDisarm();
+	d.Active();
+        return;
+    }
 
     if (e == Button::ClickRelease) {
         if (ManualOverride::isEnabled()) {
@@ -300,6 +310,11 @@ void FlightManager::onBButtonEvt(Button *b, Button::Event e)
 		forceDisarm();
 		return;
 	}
+	if (parachute(b, e)) {
+        forceDisarm();
+	d.Active();
+        return;
+    }
 		else
 	{
 		if (e == Button::ClickRelease)
@@ -310,6 +325,7 @@ void FlightManager::onBButtonEvt(Button *b, Button::Event e)
 			buz.setFrequency(440);
 			buz.play();
 			}
+			buz.stop();
 			break;
 		}
 	}
@@ -325,6 +341,11 @@ void FlightManager::onPauseButtonEvt(Button *b, Button::Event e)
 {
     if (btnEventShouldForceDisarm(b, e)) {
         forceDisarm();
+        return;
+    }
+	if (parachute(b, e)) {
+        forceDisarm();
+	d.Active();
         return;
     }
     
@@ -360,6 +381,32 @@ bool FlightManager::btnEventShouldForceDisarm(Button *b, Button::Event e) const
 
     return false;
 }
+bool FlightManager::parachute(Button *b, Button::Event e) const
+{
+    /*
+     * Force disarm will kill the motors and disarm the vehicle,
+     * even when armed and/or in the air.
+     */
+
+    UNUSED(b);
+
+    if (!armed()) {
+        return false;
+    }
+
+    if (e == Button::ShortHold) {
+        if (ButtonManager::button(Io::ButtonA).isHeldShort() &&
+            ButtonManager::button(Io::ButtonB).isHeldShort() &&
+            ButtonManager::button(Io::ButtonLoiter).isHeldShort() &&
+            ButtonManager::button(Io::ButtonRTL).isHeldShort())
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 
 void FlightManager::forceDisarm()
 {
