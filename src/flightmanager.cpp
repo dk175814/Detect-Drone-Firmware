@@ -306,8 +306,8 @@ void FlightManager::onBButtonEvt(Button *b, Button::Event e)
 		{
 			for(int i=0;i<50;i++)
 			{
-			buz.init(200);
-			buz.setFrequency(200);
+			buz.init(440);
+			buz.setFrequency(440);
 			buz.play();
 			}
 			break;
