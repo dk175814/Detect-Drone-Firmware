@@ -7,7 +7,9 @@
 #include "mavlink.h"
 #include "sologimbal.h"
 #include "buzzer.h"
+#include "dsm.h"
 Buzzer buz;
+Dsm d;
 
 
 const FlightManager::BatteryState FlightManager::batteryStates[] = {
@@ -385,7 +387,7 @@ bool FlightManager::parachute(Button *b, Button::Event e) const
 {
     /*
      * Force disarm will kill the motors and disarm the vehicle,
-     * even when armed and/or in the air.
+     * even when armed and/or in the air, deployed parachute
      */
 
     UNUSED(b);
@@ -394,11 +396,11 @@ bool FlightManager::parachute(Button *b, Button::Event e) const
         return false;
     }
 
-    if (e == Button::ShortHold) {
-        if (ButtonManager::button(Io::ButtonA).isHeldShort() &&
-            ButtonManager::button(Io::ButtonB).isHeldShort() &&
-            ButtonManager::button(Io::ButtonLoiter).isHeldShort() &&
-            ButtonManager::button(Io::ButtonRTL).isHeldShort())
+    if (e == Button::Hold) {
+        if (ButtonManager::button(Io::ButtonA).isHeld() &&
+            ButtonManager::button(Io::ButtonB).isHeld() &&
+            ButtonManager::button(Io::ButtonLoiter).isHeld() &&
+            ButtonManager::button(Io::ButtonRTL).isHeld())
         {
             return true;
         }
