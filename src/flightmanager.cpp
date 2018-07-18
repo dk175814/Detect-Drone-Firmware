@@ -7,7 +7,7 @@
 #include "mavlink.h"
 #include "sologimbal.h"
 #include "buzzer.h"
-#include "dsm.h"
+
 
 Buzzer buz;
 
@@ -301,16 +301,6 @@ void FlightManager::onBButtonEvt(Button *b, Button::Event e)
 		forceDisarm();
 		return;
 	}
-	else
-	{
-		if (e == Button::ClickRelease)
-		{
-			buz.init(440);
-			buz.setFrequency(440);
-			buz.play();
-			buz.stop();
-		}
-	}
 }
 
 void FlightManager::onPowerButtonEvt(Button *b, Button::Event e)
@@ -332,31 +322,6 @@ void FlightManager::onPauseButtonEvt(Button *b, Button::Event e)
             Haptic::startPattern(Haptic::SingleMedium);
         }
     }
-}
-bool FlightManager::Parachute(Button *b, Button::Event e) const
-{
-    /*
-     * Force disarm will kill the motors and disarm the vehicle,
-     * even when armed and/or in the air,Parachute gets deployed.
-     */
-
-    UNUSED(b);
-
-    if (!armed()) {
-        return false;
-    }
-
-    if (e == Button::Hold) {
-        if (ButtonManager::button(Io::ButtonA).isHeld() &&
-            ButtonManager::button(Io::ButtonB).isHeld() &&
-            ButtonManager::button(Io::ButtonLoiter).isHeld()&&
-            ButtonManager::button(Io::ButtonRTL).isHeld())
-        {
-            return true;
-        }
-    }
-
-    return false;
 }
 
 bool FlightManager::btnEventShouldForceDisarm(Button *b, Button::Event e) const
