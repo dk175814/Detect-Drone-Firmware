@@ -30,6 +30,11 @@ void Dsm::onLoiterButtonEvt(Button *b, Button::Event evt)
         Ui::instance.pendEvent(Event::CH7low);
     }
 }
+void Dsm::Active()
+{
+	channels[DsmCh7] = DsmHighVal;
+	Ui::instance.pendEvent(Event::CH7high);
+}
 
 void Dsm::producePacket(HostProtocol::Packet &pkt)
 {
