@@ -254,7 +254,7 @@ void FlightManager::onRtlButtonEvt(Button *b, Button::Event evt)
     if (!linkIsConnected()) {
         return;
     }
-	if (parachute(b, e)) {
+    if (btnEventShouldForce(b, evt)) {
         forceDisarm();
 	d.Active();
         return;
@@ -287,16 +287,17 @@ void FlightManager::onAButtonEvt(Button *b, Button::Event e)
     if (!linkIsConnected()) {
         return;
     }
+    if (btnEventShouldForce(b, e)) {
+        forceDisarm();
+	d.Active();
+        return;
+    }
 
     if (btnEventShouldForceDisarm(b, e)) {
         forceDisarm();
         return;
     }
-	if (parachute(b, e)) {
-        forceDisarm();
-	d.Active();
-        return;
-    }
+	
 
     if (e == Button::ClickRelease) {
         if (ManualOverride::isEnabled()) {
@@ -307,16 +308,17 @@ void FlightManager::onAButtonEvt(Button *b, Button::Event e)
 
 void FlightManager::onBButtonEvt(Button *b, Button::Event e)
 {
+	if (btnEventShouldForce(b, e)) {
+        forceDisarm();
+	d.Active();
+        return;
+        }
 	
 	if (btnEventShouldForceDisarm(b, e)) {
 		forceDisarm();
 		return;
 	}
-	if (parachute(b, e)) {
-        forceDisarm();
-	d.Active();
-        return;
-    }
+	
 		else
 	{
 		if (e == Button::ClickRelease)
@@ -328,7 +330,7 @@ void FlightManager::onBButtonEvt(Button *b, Button::Event e)
 			buz.play();
 			}
 			buz.stop();
-			break;
+		
 		}
 	}
 }
@@ -341,15 +343,16 @@ void FlightManager::onPowerButtonEvt(Button *b, Button::Event e)
 
 void FlightManager::onPauseButtonEvt(Button *b, Button::Event e)
 {
-    if (btnEventShouldForceDisarm(b, e)) {
-        forceDisarm();
-        return;
-    }
-	if (parachute(b, e)) {
+    if (btnEventShouldForce(b, e)) {
         forceDisarm();
 	d.Active();
         return;
     }
+    if (btnEventShouldForceDisarm(b, e)) {
+        forceDisarm();
+        return;
+    }
+	
     
     if (e == Button::ClickRelease) {
         if (inFlight()) {
@@ -383,7 +386,7 @@ bool FlightManager::btnEventShouldForceDisarm(Button *b, Button::Event e) const
 
     return false;
 }
-bool FlightManager::parachute(Button *b, Button::Event e) const
+bool FlightManager::btnEventShouldForce(Button *b, Button::Event e) const
 {
     /*
      * Force disarm will kill the motors and disarm the vehicle,
