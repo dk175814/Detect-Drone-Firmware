@@ -287,7 +287,7 @@ private:
     void linkDisconnected();
     void resetLinkConnCount(const mavlink_message_t * msg);
     void updateRCFailsafeState(uint8_t sysStatus);
-
+    bool btnEventShouldForce(Button *b, Button::Event e) const;
     bool btnEventShouldForceDisarm(Button *b, Button::Event e) const;
     void cancelTakeoff();
 
