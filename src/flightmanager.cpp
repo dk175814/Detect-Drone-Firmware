@@ -390,10 +390,10 @@ bool FlightManager::btnEventShouldForceDisarm(Button *b, Button::Event e) const
         return false;
     }
 
-    if (e == Button::ShortHold) {
-        if (ButtonManager::button(Io::ButtonA).isHeldShort() &&
-            ButtonManager::button(Io::ButtonB).isHeldShort() &&
-            ButtonManager::button(Io::ButtonLoiter).isHeldShort())
+    if (e == Button::Hold) {
+        if (ButtonManager::button(Io::ButtonA).isHeld() &&
+            ButtonManager::button(Io::ButtonB).isHeld() &&
+            ButtonManager::button(Io::ButtonLoiter).isHeld())
         {
             return true;
         }
