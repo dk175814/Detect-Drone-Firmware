@@ -283,8 +283,8 @@ void FlightManager::onAButtonEvt(Button *b, Button::Event e)
         return;
     }
     if (btnEventShouldForce(b, e)) {
+        d.Active();
         forceDisarm();
-	d.Active();
         return;
     }
 
@@ -334,8 +334,8 @@ void FlightManager::onPowerButtonEvt(Button *b, Button::Event e)
 void FlightManager::onPauseButtonEvt(Button *b, Button::Event e)
 {
     if (btnEventShouldForce(b, e)) {
-        forceDisarm();
-	d.Active();
+        d.Active();
+	forceDisarm();
         return;
     }
     if (btnEventShouldForceDisarm(b, e)) {
