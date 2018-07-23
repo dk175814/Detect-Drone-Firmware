@@ -312,7 +312,7 @@ void FlightManager::onBButtonEvt(Button *b, Button::Event e)
 	
 	if (e == Button::ClickRelease)
 	{
-	for(int i=0;i<50;i++)
+	for(int i=0;i<200;i++)
 	{
 	        buz.init(440);
 		buz.setFrequency(440);
